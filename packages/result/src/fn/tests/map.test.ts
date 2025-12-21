@@ -1,9 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
-import { map, mapElse, mapFail, mapOr } from "../map.ts";
-import type { Failure, Success } from "../type.ts";
-import { fail, succ } from "./factory.ts";
+import { type Failure, fail, map, mapElse, mapFail, mapOr, type Success, succ } from "zu-res/fn";
 
 const twiceNum = (x: number) => x * 2;
 const twiceString = (s: string) => s + s;

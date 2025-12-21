@@ -1,8 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
-import { Succ } from "../succ.ts";
-import type { Res } from "./res.ts";
+import { type IRes, Succ } from "zu-res/obj";
 
 const r = new Succ<1>(1);
 const r2 = new Succ(2) as Res<2, "2">;
