@@ -42,7 +42,10 @@ export class IterOnce<T> implements IterableIterator<T> {
   }
 }
 
-export function iter<S, F>(r: Result<S, F>): Iterable<S> {
+export function iter<S>(r: Success<S>): Iterable<S>;
+export function iter(r: Failure<unknown>): Iterable<never>;
+export function iter<S>(r: Result<S, unknown>): Iterable<S>;
+export function iter<S>(r: Result<S, unknown>): Iterable<S> {
   if (isFail(r)) return new IterNever();
   return new IterOnce(get(r));
 }
