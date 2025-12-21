@@ -12,8 +12,8 @@ export function map<S, F, T>(r: Result<S, F>, proj: (s: S) => T): Result<T, F> {
 }
 
 export function mapFail<S, _F>(r: Success<S>, projFail: (f: _F) => unknown): Success<S>;
-export function mapFail<F, G>(r: Failure<F>, projFail: (f: F) => G): Failure<G>;
-export function mapFail<S, F, G>(r: Result<S, F>, projFail: (f: F) => G): Result<S, G>;
+export function mapFail<F, G>(r: Failure<F>, projFail: (f: F) => NonNullable<G>): Failure<G>;
+export function mapFail<S, F, G>(r: Result<S, F>, projFail: (f: F) => NonNullable<G>): Result<S, G>;
 export function mapFail<S, F, G>(r: Result<S, F>, projFail: (f: F) => NonNullable<G>): Result<S, G> {
   if (isSucc(r)) return r;
   return fail(projFail(getFail(r)));

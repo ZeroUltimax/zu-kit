@@ -13,10 +13,10 @@ export function failChecked<F>(f: F): Failure<F> {
   return { succ: null, fail: f };
 }
 
-export function res<S>(s: S, f: null): Success<S>;
-export function res<F>(s: null, f: F): Failure<F>;
-export function res<S, F>(s: S | null, f: F | null): Result<S, F>;
-export function res<S, F>(s: S | null, f: F | null): Result<S, F> {
+export function res<S>(s: S, f: null | undefined): Success<S>;
+export function res<F>(s: null | undefined, f: F): Failure<F>;
+export function res<S, F>(s: S | null | undefined, f: F | null | undefined): Result<S | null | undefined, F>;
+export function res<S, F>(s: S | null | undefined, f: F | null | undefined): Result<S | null | undefined, F> {
   if (f != null) return fail(f);
-  return succ(s!);
+  return succ(s);
 }

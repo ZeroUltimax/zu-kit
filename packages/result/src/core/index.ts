@@ -1,6 +1,6 @@
 export type { Failure, Result, Success } from "../type.ts";
 export { and, andThen, or, orElse } from "./combine.ts";
-export { fail, failChecked, res } from "./factory.ts";
+export { fail, failChecked, res, succ } from "./factory.ts";
 export { get, getChecked, getElse, getFail, getFailChecked, getOr } from "./get.ts";
 export { isFail, isSucc } from "./guard.ts";
 export { map, mapElse, mapFail, mapOr } from "./map.ts";

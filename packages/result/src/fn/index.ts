@@ -6,11 +6,8 @@ export {
   isFail,
   isSucc,
   iter,
-  map,
-  mapElse,
-  mapFail,
-  mapOr,
   res,
+  succ,
   throwing,
   throwingAsync,
   tryify,
@@ -19,3 +16,4 @@ export {
 export type { Failure, Result, Success } from "../type.ts";
 export { and, andThen, or, orElse } from "./combine.ts";
 export { get, getChecked, getElse, getFail, getFailChecked, getOr } from "./get.ts";
+export { map, mapElse, mapFail, mapOr } from "./map.ts";

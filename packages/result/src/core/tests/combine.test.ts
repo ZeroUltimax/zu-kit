@@ -14,13 +14,13 @@ describe("Result Combiners", () => {
     it("returns second Result if first is Success", () => {
       const r1 = succ<1>(1);
       const r2 = res<2, "2">(2, null);
-      const actual = and(r1, r2) satisfies Result<2, "2">;
+      const actual = and(r1, r2) satisfies Result<2 | null, "2">;
       assert.equal(actual, r2);
     });
     it("Returns a mix of failures", () => {
       const r1 = res<1, "1">(1, null);
       const r2 = res<2, "2">(2, null);
-      const actual = and(r1, r2) satisfies Result<2, "1" | "2">;
+      const actual = and(r1, r2) satisfies Result<2 | null, "1" | "2">;
       assert.equal(actual, r2);
     });
   });
@@ -35,19 +35,19 @@ describe("Result Combiners", () => {
     it("returns second Result if first is Failure", () => {
       const r1 = fail<"1">("1");
       const r2 = res<2, "2">(2, null);
-      const actual = or(r1, r2) satisfies Result<2, "2">;
+      const actual = or(r1, r2) satisfies Result<2 | null, "2">;
       assert.equal(actual, r2);
     });
     it("Returns a mix of successes", () => {
       const r1 = res<1, "1">(1, null);
       const r2 = res<2, "2">(2, null);
-      const actual = or(r1, r2) satisfies Result<1 | 2, "2">;
+      const actual = or(r1, r2) satisfies Result<1 | 2 | null, "2">;
       assert.equal(actual, r1);
     });
   });
 
   describe("andThen", () => {
-    const thenPlus1 = (s: 1) => res<2, "2">((s + 1) as 2, null);
+    const thenPlus1 = (s: 1 | null) => res<2, "2">(((s as 1) + 1) as 2, null);
     /* node:coverage ignore next */
     const thenNever = (_: number): Success<2> => assert.fail("Expected to not call `thenNever`");
 
@@ -58,12 +58,12 @@ describe("Result Combiners", () => {
     });
     it("returns result of function if first is Success", () => {
       const r1 = succ<1>(1);
-      const actual = andThen(r1, thenPlus1) satisfies Result<2, "2">;
+      const actual = andThen(r1, thenPlus1) satisfies Result<2 | null, "2">;
       assert.deepEqual(actual, succ<2>(2));
     });
     it("returns a mix of failures", () => {
       const r1 = res<1, "1">(1, null);
-      const actual = andThen(r1, thenPlus1) satisfies Result<2, "1" | "2">;
+      const actual = andThen(r1, thenPlus1) satisfies Result<2 | null, "1" | "2">;
       assert.deepEqual(actual, res<2, "2">(2, null));
     });
   });
@@ -79,12 +79,12 @@ describe("Result Combiners", () => {
     });
     it("returns result of function if first is Failure", () => {
       const r1 = fail<"1">("1");
-      const actual = orElse(r1, elsePlus1) satisfies Result<2, "2">;
+      const actual = orElse(r1, elsePlus1) satisfies Result<2 | null, "2">;
       assert.deepEqual(actual, succ<2>(2));
     });
     it("returns a mix of successes", () => {
       const r1 = res<1, "1">(1, null);
-      const actual = orElse(r1, elsePlus1) satisfies Result<1 | 2, "2">;
+      const actual = orElse(r1, elsePlus1) satisfies Result<1 | 2 | null, "2">;
       assert.deepEqual(actual, res<1, "1">(1, null));
     });
   });

@@ -23,10 +23,10 @@ export function failChecked<F>(f: F): Fail<F> {
 
 export function res<S>(s: S, f: null): Succ<S>;
 export function res<F>(s: null, f: F): Fail<F>;
-export function res<S, F>(s: S | null, f: F | null): Res<S, F>;
-export function res<S, F>(s: S | null, f: F | null): Res<S, F> {
+export function res<S, F>(s: S | null, f: F | null): Res<S | null, F>;
+export function res<S, F>(s: S | null, f: F | null): Res<S | null, F> {
   if (f != null) return fail(f);
-  return succ(s!);
+  return succ(s);
 }
 
 // Transmute

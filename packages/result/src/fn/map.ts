@@ -14,7 +14,7 @@ export const map =
 
 export const mapFail =
   <F, G>(
-    projFail: (s: F) => G,
+    projFail: (s: F) => NonNullable<G>,
   ): {
     <S>(r: Success<S>): Success<S>;
     (r: Failure<F>): Failure<G>;
