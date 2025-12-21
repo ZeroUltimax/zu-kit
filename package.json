@@ -1,17 +1,9 @@
 {
-  "name": "zu-kit",
-  "version": "0.0.0",
-  "description": "Toolkit of core typescript primitives by ZeroUltimax",
   "type": "module",
   "scripts": {
     "dev": "node --test --watch",
     "test": "node --test --experimental-test-coverage"
   },
-  "author": {
-    "name": "Antoine Robertson",
-    "email": "antoinerobertson92@gmail.com"
-  },
-  "license": "UNLICENSED",
   "devDependencies": {
     "@biomejs/biome": "^2.2.5",
     "typescript": "^5.9.3",
