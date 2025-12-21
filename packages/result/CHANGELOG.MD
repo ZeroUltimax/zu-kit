@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Running tests is now part of the prepare script to ensure tests are always run before publishing.
+
 ### Removed
 
 [unreleased]: https://github.com/ZeroUltimax/zu-kit/compare/v0.0.0...HEAD

@@ -11,33 +11,26 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/esm/index.ts",
-      "require": "./dist/cjs/index.js",
-      "types": "./dist/types/index.d.ts"
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
     },
     "./fn": {
-      "import": "./dist/esm/fn/index.ts",
-      "require": "./dist/cjs/fn/index.js",
-      "types": "./dist/types/fn/index.d.ts"
+      "types": "./dist/types/fn/index.d.ts",
+      "import": "./dist/esm/fn/index.js",
+      "require": "./dist/cjs/fn/index.js"
     },
     "./obj": {
-      "import": "./dist/esm/obj/index.ts",
-      "require": "./dist/cjs/obj/index.js",
-      "types": "./dist/types/obj/index.d.ts"
-    },
-    "./obj/*.ts": {
-      "import": "./dist/esm/obj/*.ts",
-      "require": "./dist/cjs/obj/*.js",
-      "types": "./dist/types/obj/*.d.ts"
+      "types": "./dist/types/obj/index.d.ts",
+      "import": "./dist/esm/obj/index.js",
+      "require": "./dist/cjs/obj/index.js"
     }
   },
-  "files": [
-    "dist"
-  ],
   "scripts": {
-    "prepare": "npm run prepare-clean && npm run prepare-esm && npm run prepare-cjs",
+    "prepare": "npm run prepare-clean && npm run prepare-esm && npm run prepare-cjs && npm run test",
     "prepare-clean": "rm -rf dist",
     "prepare-esm": "tsc --project tsconfig.esm.json",
-    "prepare-cjs": "tsc --project tsconfig.cjs.json"
+    "prepare-cjs": "tsc --project tsconfig.cjs.json",
+    "test": "node --test --experimental-test-coverage"
   }
 }
