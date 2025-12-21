@@ -63,7 +63,7 @@ describe("Obj Utilities", () => {
         const actual = res(succ, fail);
 
         // @ts-expect-error Cannot determine success or failure
-        const _isSucc = actual satisfies Succ<number>;
+        const _isSucc = actual satisfies Succ<number | null>;
         // @ts-expect-error Cannot determine success or failure
         const _isFail = actual satisfies Fail<string>;
 
