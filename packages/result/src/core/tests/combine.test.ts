@@ -1,9 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
-import { fail, res, succ } from "../factory.ts";
-import type { Failure, Result, Success } from "../type.ts";
-import { and, andThen, or, orElse } from "./combine.ts";
+import { and, andThen, type Failure, fail, or, orElse, type Result, res, type Success, succ } from "zu-res";
 
 describe("Result Combiners", () => {
   describe("and", () => {

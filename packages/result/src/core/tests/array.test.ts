@@ -1,9 +1,7 @@
 import assert from "node:assert";
 import { describe, it } from "node:test";
 
-import type { Failure, Result, Success } from "../type.ts";
-import { fail, res, succ } from "./factory.ts";
-import { all } from "./transmute/array.ts";
+import { all, type Failure, fail, type Result, res, type Success, succ } from "zu-res";
 
 describe("Array transmutation", () => {
   it("Collates an array of succceses into a success", () => {

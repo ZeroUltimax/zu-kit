@@ -1,8 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
-import { fail, res, succ } from "../factory.ts";
-import { get, getChecked, getElse, getFail, getFailChecked, getOr } from "../get.ts";
+import { fail, get, getChecked, getElse, getFail, getFailChecked, getOr, res, succ } from "zu-res";
 
 describe("Result getters", () => {
   describe("Hard getters", () => {

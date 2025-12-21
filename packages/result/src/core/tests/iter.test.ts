@@ -1,8 +1,7 @@
 import assert from "node:assert";
 import { describe, it } from "node:test";
 
-import { fail, succ } from "./factory.ts";
-import { iter } from "./transmute/iter.ts";
+import { fail, iter, succ } from "zu-res";
 
 describe("Iterator transmutation", () => {
   it("Iterates the success value once", () => {

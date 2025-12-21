@@ -1,8 +1,7 @@
 import assert from "node:assert";
 import { describe, it } from "node:test";
 
-import { fail, succ } from "./factory.ts";
-import { throwing, throwingAsync } from "./transmute/throw.ts";
+import { fail, succ, throwing, throwingAsync } from "zu-res";
 
 describe("Throwing transmutation", () => {
   it("Returns the success value", () => {

@@ -1,9 +1,7 @@
 import assert from "node:assert";
 import { describe, it } from "node:test";
 
-import type { Success } from "../type.ts";
-import { fail, succ } from "./factory.ts";
-import { awaited } from "./transmute/promise.ts";
+import { awaited, fail, type Success, succ } from "zu-res";
 
 describe("Promise transmutation", () => {
   it("Awaits the success promise", async () => {

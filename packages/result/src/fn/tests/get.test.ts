@@ -1,8 +1,7 @@
 import assert from "node:assert";
 import { describe, it } from "node:test";
 
-import { getElse, getOr } from "../get.ts";
-import { fail, succ } from "./factory.ts";
+import { fail, getElse, getOr, succ } from "zu-res/fn";
 
 describe("Functional Getters", () => {
   const getOrTwo = getOr(2 as const);

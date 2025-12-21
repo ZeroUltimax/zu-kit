@@ -1,9 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
-import { fail, res, succ } from "../factory.ts";
-import { isFail, isSucc } from "../guard.ts";
-import type { Failure, Success } from "../type.ts";
+import { type Failure, fail, isFail, isSucc, res, type Success, succ } from "zu-res";
 
 describe("Result guard", () => {
   describe("Success Guard", () => {

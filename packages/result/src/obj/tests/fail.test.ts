@@ -1,11 +1,10 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
-import { Fail } from "../fail.ts";
-import type { Res } from "./res.ts";
+import { Fail, type IRes } from "zu-res/obj";
 
 const r = new Fail<"1">("1");
-const r2 = new Fail<"2">("2") as Res<2, "2">;
+const r2 = new Fail<"2">("2") as IRes<2, "2">;
 
 describe("Obj Failure", () => {
   describe("Guard", () => {
@@ -79,7 +78,7 @@ describe("Obj Failure", () => {
     });
   });
   describe("Combine", () => {
-    const elsePlus1 = (f: "1"): Res<2, "2"> => new Fail(`${+f + 1}` as "2");
+    const elsePlus1 = (f: "1"): IRes<2, "2"> => new Fail(`${+f + 1}` as "2");
 
     /* node:coverage ignore next */
     const neverCall = (_: string): Fail<"2"> => assert.fail("Expected to not call `neverCall`");
@@ -90,7 +89,7 @@ describe("Obj Failure", () => {
     });
 
     it("or returns second Result", () => {
-      const actual = r.or(r2) satisfies Res<2, "2">;
+      const actual = r.or(r2) satisfies IRes<2, "2">;
       assert.equal(actual, r2);
     });
 
@@ -101,7 +100,7 @@ describe("Obj Failure", () => {
 
     it("or else returns result of function", () => {
       const expected = new Fail("2");
-      const actual = r.orElse(elsePlus1) satisfies Res<2, "2">;
+      const actual = r.orElse(elsePlus1) satisfies IRes<2, "2">;
       assert.deepEqual(actual, expected);
     });
   });

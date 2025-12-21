@@ -1,9 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
-import { Fail } from "./fail.ts";
-import { all, fail, failChecked, fromResult, type Res, res, succ, tryify, trying } from "./res.ts";
-import { Succ } from "./succ.ts";
+import { all, Fail, fail, failChecked, fromResult, type IRes, res, resultify, resulting, Succ, succ } from "zu-res/obj";
 
 describe("Obj Utilities", () => {
   describe("Factory", () => {
