@@ -21,7 +21,7 @@ describe("Result guard", () => {
       const r = res<number, string>(1, null);
       const actual = isSucc(r);
       assert(actual);
-      r satisfies Success<number>;
+      r satisfies Success<number | null>;
       // @ts-expect-error We expect success
       r satisfies Failure<string>;
     });
