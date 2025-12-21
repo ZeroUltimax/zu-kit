@@ -32,7 +32,7 @@ export class Succ<S> implements IRes<S, never>, Success<S> {
   public getOr(_def: unknown): S {
     return this.succ;
   }
-  public getElse(_def: (f: never) => unknown): S {
+  public getElse(_defFn: (f: never) => unknown): S {
     return this.succ;
   }
 

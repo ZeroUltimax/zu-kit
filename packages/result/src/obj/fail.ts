@@ -32,8 +32,8 @@ export class Fail<F> implements IRes<never, F>, Failure<F> {
   public getOr<DS>(def: DS): DS {
     return def;
   }
-  public getElse<DS>(def: (f: F) => DS): DS {
-    return def(this.fail);
+  public getElse<DS>(defFn: (f: F) => DS): DS {
+    return defFn(this.fail);
   }
 
   // Maps

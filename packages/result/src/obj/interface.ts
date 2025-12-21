@@ -10,7 +10,7 @@ export interface IRes<S, F> extends Iterable<S> {
   getChecked(): S;
   getFailChecked(): NonNullable<F>;
   getOr<DS>(def: DS): S | DS;
-  getElse<DS>(def: (f: F) => DS): S | DS;
+  getElse<DS>(defFn: (f: F) => DS): S | DS;
 
   // Maps
   map<T>(proj: (s: S) => T): Succ<T> | Fail<F>;

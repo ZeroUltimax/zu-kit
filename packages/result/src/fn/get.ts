@@ -16,11 +16,11 @@ export const getOr =
 
 export const getElse =
   <F, DS>(
-    def: (f: F) => DS,
+    defFn: (f: F) => DS,
   ): {
     <S>(r: Success<S>): S;
     (r: Failure<F>): DS;
     <S>(r: Result<S, F>): S | DS;
   } =>
   <S>(r: Result<S, F>) =>
-    _getElse(r, def);
+    _getElse(r, defFn);
