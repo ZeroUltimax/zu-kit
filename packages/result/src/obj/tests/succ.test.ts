@@ -4,7 +4,7 @@ import { describe, it } from "node:test";
 import { type IRes, Succ } from "zu-res/obj";
 
 const r = new Succ<1>(1);
-const r2 = new Succ(2) as Res<2, "2">;
+const r2 = new Succ(2) as IRes<2, "2">;
 
 describe("Obj Success", () => {
   describe("Guard", () => {
@@ -82,12 +82,12 @@ describe("Obj Success", () => {
     });
   });
   describe("Combine", () => {
-    const thenPlus1 = (s: 1): Res<2, "2"> => new Succ((s + 1) as 2);
+    const thenPlus1 = (s: 1): IRes<2, "2"> => new Succ((s + 1) as 2);
     /* node:coverage ignore next */
     const neverCall = (_: number): Succ<2> => assert.fail("Expected to not call `neverCall`");
 
     it("and returns second Res", () => {
-      const actual = r.and(r2) satisfies Res<2, "2">;
+      const actual = r.and(r2) satisfies IRes<2, "2">;
       assert.equal(actual, r2);
     });
 
@@ -98,7 +98,7 @@ describe("Obj Success", () => {
 
     it("and then returns result of function", () => {
       const expected = new Succ<2>(2);
-      const actual = r.andThen(thenPlus1) satisfies Res<2, "2">;
+      const actual = r.andThen(thenPlus1) satisfies IRes<2, "2">;
       assert.deepEqual(actual, expected);
     });
 

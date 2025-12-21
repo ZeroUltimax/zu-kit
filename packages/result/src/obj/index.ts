@@ -6,7 +6,6 @@ export {
   fail,
   failChecked,
   fromResult,
-  type Res,
   res,
   resultify,
   resulting,

@@ -13,19 +13,19 @@ export interface IRes<S, F> extends Iterable<S> {
   getElse<DS>(defFn: (f: F) => DS): S | DS;
 
   // Maps
-  map<T>(proj: (s: S) => T): Succ<T> | Fail<F>;
-  mapFail<G>(projFail: (f: F) => G): Succ<S> | Fail<G>;
+  map<T>(proj: (s: S) => T): IRes<T, F>;
+  mapFail<G>(projFail: (f: F) => G): IRes<S, G>;
   mapOr<T, U>(proj: (s: S) => T, def: U): T | U;
   mapElse<T, G>(proj: (s: S) => T, projFail: (f: F) => G): T | G;
 
   // Combiners
-  and<B extends IRes<unknown, unknown>>(b: B): Fail<F> | B;
-  or<B extends IRes<unknown, unknown>>(b: B): Succ<S> | B;
-  andThen<B extends IRes<unknown, unknown>>(b: (s: S) => B): Fail<F> | B;
-  orElse<B extends IRes<unknown, unknown>>(b: (f: F) => B): Succ<S> | B;
+  and<T, G>(b: IRes<T, G>): IRes<T, F | G>;
+  or<T, G>(b: IRes<T, G>): IRes<S | T, G>;
+  andThen<T, G>(b: (s: S) => IRes<T, G>): IRes<T, F | G>;
+  orElse<T, G>(b: (f: F) => IRes<T, G>): IRes<S | T, G>;
 
   // Transmuters
-  awaited(): Promise<Succ<Awaited<S>> | Fail<F>>;
+  awaited(): Promise<IRes<Awaited<S>, F>>;
   throwing(): S;
   throwingAsync(): Promise<Awaited<S>>;
 }

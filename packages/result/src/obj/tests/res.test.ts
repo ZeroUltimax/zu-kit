@@ -137,25 +137,25 @@ describe("Obj Utilities", () => {
       }
       it("Wraps the return value in success", () => {
         const expected = new Succ(3);
-        const actual = resulting(() => add(1, 2)) satisfies Res<3, unknown>;
+        const actual = resulting(() => add(1, 2)) satisfies IRes<3, unknown>;
         assert.deepStrictEqual(actual, expected);
       });
 
       it("Wraps the thrown error in failure", () => {
         const expected = new Fail(20);
-        const actual = resulting(() => throwMultiply(4, 5)) satisfies Res<6, unknown>;
+        const actual = resulting(() => throwMultiply(4, 5)) satisfies IRes<6, unknown>;
         assert.deepStrictEqual(actual, expected);
       });
 
       it("tryifies a successful function", () => {
-        const tryAdd = resultify(add) satisfies (a: 1, b: 2) => Res<3, unknown>;
+        const tryAdd = resultify(add) satisfies (a: 1, b: 2) => IRes<3, unknown>;
         const expected = new Succ(3);
         const actual = tryAdd(1, 2);
         assert.deepStrictEqual(actual, expected);
       });
 
       it("tryifies a throwing function", () => {
-        const tryThrowMultiply = resultify(throwMultiply) satisfies (a: 4, b: 5) => Res<6, unknown>;
+        const tryThrowMultiply = resultify(throwMultiply) satisfies (a: 4, b: 5) => IRes<6, unknown>;
         const expected = new Fail(20);
         const actual = tryThrowMultiply(4, 5);
         assert.deepStrictEqual(actual, expected);
