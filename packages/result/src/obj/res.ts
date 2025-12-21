@@ -49,7 +49,7 @@ export function all<const RS extends readonly Result<unknown, unknown>[] | []>(r
   return fromResult(_all(rs)) as any;
 }
 
-export function trying<S, F = unknown>(fn: () => S): Res<S, F> {
+export function resulting<S, F = unknown>(fn: () => S): Res<S, F> {
   try {
     return new Succ(fn());
   } catch (e) {
@@ -57,6 +57,6 @@ export function trying<S, F = unknown>(fn: () => S): Res<S, F> {
     return new Fail(e as NonNullable<F>);
   }
 }
-export function tryify<A extends unknown[], R, F = unknown>(fn: (...args: A) => R): (...args: A) => Res<R, F> {
-  return (...args) => trying(() => fn(...args));
+export function resultify<A extends unknown[], R, F = unknown>(fn: (...args: A) => R): (...args: A) => Res<R, F> {
+  return (...args) => resulting(() => fn(...args));
 }

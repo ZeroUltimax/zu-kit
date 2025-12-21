@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Running tests is now part of the prepare script to ensure tests are always run before publishing.
+- `trying` and `tryify` renamed to `resulting` and `resultify` for clarity.
 
 ### Removed
 

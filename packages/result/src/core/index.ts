@@ -8,4 +8,4 @@ export { all } from "./transmute/array.ts";
 export { iter } from "./transmute/iter.ts";
 export { awaited } from "./transmute/promise.ts";
 export { throwing, throwingAsync } from "./transmute/throw.ts";
-export { tryify, trying } from "./transmute/try.ts";
+export { resultify, resulting } from "./transmute/try.ts";
