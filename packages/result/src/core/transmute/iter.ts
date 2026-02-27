@@ -1,4 +1,4 @@
-import type { Result } from "../../type.ts";
+import type { Failure, Result, Success } from "../../type.ts";
 import { get } from "../get.ts";
 import { isFail } from "../guard.ts";
 

@@ -5,7 +5,6 @@ import type { IRes } from "./interface.ts";
 
 export class Succ<S> implements IRes<S, never>, Success<S> {
   public readonly succ: S;
-  public readonly fail: null = null;
 
   constructor(succ: S) {
     this.succ = succ;

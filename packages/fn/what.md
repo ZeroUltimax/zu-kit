@@ -1,0 +1,1 @@
+Have a look at the `zu-func`, it not only has `pipe`, but also a whole bunch of other useful functional programming utilities, such as `compose`, `curry`, `partial`, `memoize`, `debounce`, `throttle`, `once`, `tap`, `identity`, `constant`, `negate`, and many more.

@@ -4,7 +4,6 @@ import type { IRes } from "./interface.ts";
 import type { Succ } from "./succ.ts";
 
 export class Fail<F> implements IRes<never, F>, Failure<F> {
-  public readonly succ: null = null;
   public readonly fail: NonNullable<F>;
 
   constructor(fail: NonNullable<F>) {

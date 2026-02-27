@@ -1,16 +1,16 @@
 import type { Failure, Result, Success } from "../type.ts";
 
 export function succ<S>(s: S): Success<S> {
-  return { succ: s, fail: null };
+  return { succ: s };
 }
 
 export function fail<F>(f: NonNullable<F>): Failure<F> {
-  return { succ: null, fail: f };
+  return { fail: f };
 }
 
 export function failChecked<F>(f: F): Failure<F> {
   if (f == null) throw new TypeError("Expected not null or undefined");
-  return { succ: null, fail: f };
+  return { fail: f };
 }
 
 export function res<S>(s: S, f: null | undefined): Success<S>;
