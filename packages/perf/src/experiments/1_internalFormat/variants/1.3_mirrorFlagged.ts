@@ -1,4 +1,4 @@
-import type { Variant } from "../../../perf/test.ts";
+import type { Variant } from "../../../test.ts";
 import type { ResultFormatVariant } from "../variantType.ts";
 
 // Boolean flag, differentiated by flag and field names
@@ -45,18 +45,12 @@ function map<S, F, T>(r: Result<S, F>, proj: (s: S) => T): Result<T, F> {
   return succ(proj(get(r)));
 }
 
-function andThen<S, F, T, G>(
-  a: Result<S, F>,
-  b: (s: S) => Result<T, G>,
-): Result<T, F | G> {
+function andThen<S, F, T, G>(a: Result<S, F>, b: (s: S) => Result<T, G>): Result<T, F | G> {
   if (isFail(a)) return a;
   return b(get(a));
 }
 
-function orElse<S, F, T, G>(
-  a: Result<S, F>,
-  b: (f: F) => Result<T, G>,
-): Result<S | T, G> {
+function orElse<S, F, T, G>(a: Result<S, F>, b: (f: F) => Result<T, G>): Result<S | T, G> {
   if (isSucc(a)) return a;
   return b(getFail(a));
 }

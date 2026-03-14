@@ -2,7 +2,7 @@
 // Must test individually map, andThen, orElse.
 // Must test combined operations.
 
-import type { Experiment } from "../../perf/test.ts";
+import type { Experiment } from "../../test.ts";
 import { tests } from "./tests/index.ts";
 import { variants } from "./variants/index.ts";
 import type { ResultFormatVariant } from "./variantType.ts";

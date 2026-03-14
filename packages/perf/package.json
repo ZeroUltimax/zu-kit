@@ -11,7 +11,7 @@
   "type": "module",
   "scripts": {
     "check": "tsc --noEmit --project tsconfig.esm.json",
-    "perf": "node src/run2.ts",
+    "perf": "node src/run.ts",
     "perf-result": "echo NOT IMPLEMENTED"
   },
   "devDependencies": {

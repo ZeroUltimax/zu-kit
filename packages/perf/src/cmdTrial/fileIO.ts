@@ -1,5 +1,6 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
+
 import type { TrialData } from "./types.ts";
 
 let first = true;
@@ -21,9 +22,5 @@ export async function loadTrial(): Promise<TrialData> {
 
 export async function saveTrial(trial: TrialData): Promise<void> {
   await fs.promises.mkdir(path.dirname(LATEST_PATH), { recursive: true });
-  await fs.promises.writeFile(
-    LATEST_PATH,
-    JSON.stringify(trial, null, 2),
-    "utf-8",
-  );
+  await fs.promises.writeFile(LATEST_PATH, JSON.stringify(trial, null, 2), "utf-8");
 }

@@ -3,8 +3,19 @@
 export interface TrialData {
   id?: string;
   experimentId?: string;
-  currentTestId?: number;
-  tests?: TestData[];
+  testData?: TestData[];
+
+  done?: true;
 }
 
-export type TestData = {};
+export interface TestData {
+  id?: string;
+  variantData?: VariantData[];
+  done?: true;
+}
+
+export interface VariantData {
+  iters?: number;
+  calibrated?: true;
+  samples?: number[];
+}

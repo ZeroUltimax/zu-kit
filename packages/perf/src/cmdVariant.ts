@@ -1,10 +1,10 @@
 import assert from "node:assert";
-import path from "node:path";
 
 import { Command } from "commander";
 
 import { experiments } from "./experiments/index.ts";
-import { type Experiment, instantiateTests } from "./test.ts";
+import { instantiateTests } from "./test.ts";
+import { byIdOrName } from "./utils.ts";
 
 export const cmdVariant: Command = new Command(".variant")
   .description(
@@ -15,12 +15,7 @@ export const cmdVariant: Command = new Command(".variant")
   .argument("variant", "Variant ID or Name")
   .argument("samples", "Sample count", Number)
   .argument("iterations", "Iteration count", Number)
-  .option("--experiment-src <file>", "Experiment source file", "__experiments__/index.ts")
   .action(actionVariant);
-
-// interface VariantOptions {
-//   experimentSrc: string;
-// }
 
 async function actionVariant(
   experimentIdOrName: string,
@@ -30,21 +25,16 @@ async function actionVariant(
   iters: number,
   // { experimentSrc }: VariantOptions,
 ): Promise<void> {
-  const experimentById = experiments.find((x) => x.id === experimentIdOrName);
-  const experimentByName = experiments.find((x) => x.name === experimentIdOrName);
-  const experiment = experimentById ?? experimentByName;
+  const experiment = byIdOrName(experiments, experimentIdOrName);
+
   if (!experiment) throw new Error(`Experiment not found: ${experimentIdOrName}`);
 
   const { tests, variants } = experiment;
 
-  const testById = tests.find((t) => t.id === testIdOrName);
-  const testByName = tests.find((t) => t.name === testIdOrName);
-  const test = testById ?? testByName;
+  const test = byIdOrName(tests, testIdOrName);
   if (!test) throw new Error(`Test not found: ${testIdOrName}`);
 
-  const variantById = variants.find((v) => v.id === variantIdOrName);
-  const variantByName = variants.find((v) => v.name === variantIdOrName);
-  const variant = variantById ?? variantByName;
+  const variant = byIdOrName(variants, variantIdOrName);
   if (!variant) throw new Error(`Variant not found: ${variantIdOrName}`);
 
   console.info(
@@ -57,11 +47,11 @@ Variant "${variant.name}" (${variant.id})
 
   console.info(`Instantiating tests...`);
   let acc = 0;
-  const testInstances = instantiateTests(test.factory, variant.value, iters);
-  assert.equal(testInstances.length, iters);
+  const instances = instantiateTests(test.factory, variant.value, iters);
+  assert.equal(instances.length, iters);
 
   console.info(`Warmup Phase...`);
-  for (let i = 0; i < iters; i++) acc = testInstances[i]!(acc);
+  for (const instance of instances) acc = instance(acc);
 
   console.info(`Benchmark Phase...`);
   const samples: number[] = [];
@@ -71,7 +61,7 @@ Variant "${variant.name}" (${variant.id})
 
   for (let sampleIndex = 0; sampleIndex < sampleCount; sampleIndex++) {
     const start = performance.now();
-    for (let i = 0; i < iters; i++) acc = testInstances[i]!(acc);
+    for (const instance of instances) acc = instance(acc);
     const end = performance.now();
     const durationMs = end - start;
     const durationNs = durationMs * 1e6;

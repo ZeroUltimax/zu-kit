@@ -1,4 +1,4 @@
-import type { Variant } from "../../../perf/test.ts";
+import type { Variant } from "../../../test.ts";
 import type { ResultFormatVariant } from "../variantType.ts";
 import { monoFlagged } from "./1.1_monoFlagged.ts";
 import { dualFlagged } from "./1.2_dualFlagged.ts";
@@ -14,7 +14,7 @@ import { arrayFull } from "./5.1_arrayFull.ts";
 import { arrayPartialSucc } from "./5.2_arrayPartialSucc.ts";
 import { arrayPartialFail } from "./5.3_arrayPartialFail.ts";
 
-export const variants: Variant<ResultFormatVariant>[] = [
+const _variants: Variant<ResultFormatVariant>[] = [
   monoFlagged,
   dualFlagged,
   mirrorFlagged,
@@ -27,4 +27,7 @@ export const variants: Variant<ResultFormatVariant>[] = [
   mirrorUndefCheckUndef,
   arrayFull,
   arrayPartialSucc,
+  arrayPartialFail,
 ];
+
+export const variants: Map<string, Variant<ResultFormatVariant>> = new Map(_variants.map((v) => [v.id, v]));

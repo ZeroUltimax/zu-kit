@@ -1,15 +1,11 @@
-import type { Test, TestFactory } from "../../../perf/test.ts";
+import type { Test, TestFactory } from "../../../test.ts";
 import type { NumVariant, ResultFormatVariant } from "../variantType.ts";
 
 function double(x: number): number {
   return x * 2;
 }
 
-function test<SS, FF>(
-  module: NumVariant<SS, FF>,
-  result: SS | FF,
-  acc: number,
-): number {
+function test<SS, FF>(module: NumVariant<SS, FF>, result: SS | FF, acc: number): number {
   const mapped = module.map(result, double);
 
   if (module.isFail(mapped)) {
@@ -28,7 +24,7 @@ const factory: TestFactory<ResultFormatVariant> = function* (module) {
 };
 
 export const mapNum: Test<ResultFormatVariant> = {
-  if: "3.1",
+  id: "3.1",
   name: "mapNum",
   factory,
 };

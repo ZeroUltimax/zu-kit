@@ -2,9 +2,10 @@ import { Command } from "commander";
 
 import { experiments } from "../experiments/index.ts";
 import { loadTrial, saveTrial } from "./fileIO.ts";
-import { stepInitializeTests } from "./stepInitializeTests.ts";
-import { stepInitializeTrialMeta } from "./stepInitializeTrialMeta.ts";
-import { stepRunTest } from "./stepRunTest.ts";
+import { stepFinishTrial } from "./stepFinishTrial.ts";
+import { stepInitTests } from "./stepInitTests.ts";
+import { stepInitTrial } from "./stepInitTrial.ts";
+import { stepRunTests } from "./stepRunTests.ts";
 import type { TrialData } from "./types.ts";
 
 export const cmdTrial: Command = new Command("trial")
@@ -26,49 +27,38 @@ async function trialWorkLoop(options: TrialWorkLoopOptions): Promise<void> {
   while (true) {
     const trial: TrialData = await loadTrial();
 
-    const { trial: updatedTrial, done } = await performTrialWork(trial, options);
+    const updatedTrial = await performTrialWork(trial, options);
 
     await saveTrial(updatedTrial);
-    if (done) break;
+    if (updatedTrial.done) break;
   }
 }
 
-interface TrialWorkResult {
-  trial: TrialData;
-  done: boolean;
-}
-
-async function performTrialWork(trial: TrialData, options: TrialWorkLoopOptions): Promise<TrialWorkResult> {
+async function performTrialWork(trialData: TrialData, options: TrialWorkLoopOptions): Promise<TrialData> {
   // Step 1: Ensure meta exists
-  if (trial.meta == null) {
+  if (trialData.id == null || trialData.experimentId == null) {
     // Optionally, you can use options.experimentId or experimentName here in the future
-    const trialUpdate = await stepInitializeTrialMeta(options);
-    return {
-      trial: { ...trial, ...trialUpdate },
-      done: false,
-    };
+    const trialUpdate = await stepInitTrial(options);
+    return { ...trialData, ...trialUpdate };
   }
 
-  if (trial.currentTestIdx == null || trial.tests == null) {
-    const trialUpdate = await stepInitializeTests();
-    return {
-      trial: { ...trial, ...trialUpdate },
-      done: false,
-    };
+  const { experimentId } = trialData;
+  const experiment = experiments.get(experimentId);
+  if (experiment == null) throw new Error(`Experiment not found for trial: ${experimentId}`);
+
+  if (trialData.testData == null) {
+    const trialUpdate = await stepInitTests();
+    return { ...trialData, ...trialUpdate };
   }
 
-  const experimentId = trial.meta.experiment;
-  const experiment = experiments.get(experimentId)!;
+  const { testData } = trialData;
+  const allPresent = testData.length === experiment.tests.size;
+  const allDone = testData.every((t) => t.done);
+  if (allPresent && allDone) return stepFinishTrial();
 
-  if (trial.currentTestIdx < experiment.tests.length) {
-    const currentTest = experiment.tests[trial.currentTestIdx]!;
-    const trialUpdate = await stepRunTest(experiment, currentTest);
-    return {
-      trial: { ...trial, ...trialUpdate },
-      done: false,
-    };
-  }
-
-  // ...future steps...
-  return { trial, done: true };
+  const testDataUpdate = await stepRunTests(experiment, testData);
+  return {
+    ...trialData,
+    testData: testDataUpdate,
+  };
 }

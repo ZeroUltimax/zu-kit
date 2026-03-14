@@ -1,4 +1,4 @@
-import type { Test } from "../../../perf/test.ts";
+import type { Test } from "../../../test.ts";
 import type { ResultFormatVariant } from "../variantType.ts";
 import { checkNum } from "./1.1_checkNum.ts";
 import { checkObj } from "./1.2_checkObj.ts";
@@ -9,7 +9,7 @@ import { mapObj } from "./3.2_mapObj.ts";
 import { chainNum } from "./4.1_chainNum.ts";
 import { chainObj } from "./4.2_chainObj.ts";
 
-export const tests: Test<ResultFormatVariant>[] = [
+const _tests: Test<ResultFormatVariant>[] = [
   checkNum,
   checkObj,
   allocNum,
@@ -19,3 +19,5 @@ export const tests: Test<ResultFormatVariant>[] = [
   chainNum,
   chainObj,
 ];
+
+export const tests: Map<string, Test<ResultFormatVariant>> = new Map(_tests.map((t) => [t.id, t]));

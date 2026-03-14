@@ -1,11 +1,7 @@
-import type { Test, TestFactory } from "../../../perf/test.ts";
+import type { Test, TestFactory } from "../../../test.ts";
 import type { NumVariant, ResultFormatVariant } from "../variantType.ts";
 
-function thenRand<SS, FF>(
-  module: NumVariant<SS, FF>,
-  res: number,
-  rand: number,
-): SS | FF {
+function thenRand<SS, FF>(module: NumVariant<SS, FF>, res: number, rand: number): SS | FF {
   if (rand > res) {
     return module.succ(rand);
   } else {
@@ -13,19 +9,9 @@ function thenRand<SS, FF>(
   }
 }
 
-function test<SS, FF>(
-  module: NumVariant<SS, FF>,
-  rand0: SS | FF,
-  rand1: number,
-  rand2: number,
-  acc: number,
-): number {
-  const andThened = module.andThen(rand0, (res) =>
-    thenRand(module, res, rand1),
-  );
-  const orElsed = module.orElse(andThened, (res) =>
-    thenRand(module, res, rand2),
-  );
+function test<SS, FF>(module: NumVariant<SS, FF>, rand0: SS | FF, rand1: number, rand2: number, acc: number): number {
+  const andThened = module.andThen(rand0, (res) => thenRand(module, res, rand1));
+  const orElsed = module.orElse(andThened, (res) => thenRand(module, res, rand2));
 
   if (module.isFail(orElsed)) {
     return acc - module.getFail(orElsed);

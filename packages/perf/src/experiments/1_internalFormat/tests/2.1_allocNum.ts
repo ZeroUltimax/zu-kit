@@ -1,11 +1,7 @@
-import type { Test, TestFactory } from "../../../perf/test.ts";
+import type { Test, TestFactory } from "../../../test.ts";
 import type { NumVariant, ResultFormatVariant } from "../variantType.ts";
 
-function test<SS, FF>(
-  module: NumVariant<SS, FF>,
-  rand0: number,
-  acc: number,
-): number {
+function test<SS, FF>(module: NumVariant<SS, FF>, rand0: number, acc: number): number {
   if (rand0 < 0.5) {
     const result = module.fail(rand0);
     return acc - module.getFail(result);
