@@ -24,9 +24,5 @@
     "skipLibCheck": true
   },
   // Exclude tests from compilation
-  "exclude": [
-    "**/tests",
-    "**/*.test.ts",
-    "**/*.spec.ts"
-  ]
+  "exclude": ["**/tests", "**/*.test.ts", "**/*.spec.ts"]
 }

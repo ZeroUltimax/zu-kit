@@ -1,8 +1,6 @@
 {
   "extends": "./tsconfig.lib.json",
   // Do not exclude tests for IDE
-  "include": [
-    "./packages/*/src/**/*.ts",
-  ],
+  "include": ["./packages/*/src/**/*.ts"],
   "exclude": []
 }

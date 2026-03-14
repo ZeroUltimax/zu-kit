@@ -4,13 +4,7 @@
     "outDir": "dist/esm",
     "declarationDir": "dist/types"
   },
-  "include": [
-    "./src/**/*.ts"
-  ],
+  "include": ["./src/**/*.ts"],
   // Exclude tests from compilation
-  "exclude": [
-    "**/tests",
-    "**/*.test.ts",
-    "**/*.spec.ts"
-  ]
+  "exclude": ["**/tests", "**/*.test.ts", "**/*.spec.ts"]
 }
