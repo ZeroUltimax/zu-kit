@@ -1,4 +1,4 @@
-import { experiments } from "../../../__experiments__/index.ts";
+import { experiments } from "../experiments/index.ts";
 import type { TrialWorkLoopOptions } from "./index.ts";
 import type { TrialData } from "./types.ts";
 

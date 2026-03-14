@@ -31,11 +31,6 @@
     "prepare-clean": "rm -rf dist",
     "prepare-esm": "tsc --project tsconfig.esm.json",
     "prepare-cjs": "tsc --project tsconfig.cjs.json",
-    "test": "node --test --experimental-test-coverage",
-    "perf": "node --experimental-strip-types perf/run2.ts",
-    "perf-result": "echo NOT IMPLEMENTED"
-  },
-  "devDependencies": {
-    "commander": "^14.0.3"
+    "test": "node --test --experimental-test-coverage"
   }
 }

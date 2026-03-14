@@ -3,7 +3,7 @@ import path from "node:path";
 
 import { Command } from "commander";
 
-import { experiments } from "../../result/__experiments__/index.ts";
+import { experiments } from "./experiments/index.ts";
 import { type Experiment, instantiateTests } from "./test.ts";
 
 export const cmdVariant: Command = new Command(".variant")

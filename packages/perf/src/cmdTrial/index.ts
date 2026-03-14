@@ -1,9 +1,10 @@
 import { Command } from "commander";
 
-import { experiments } from "../../../__experiments__/index.ts";
+import { experiments } from "../experiments/index.ts";
 import { loadTrial, saveTrial } from "./fileIO.ts";
 import { stepInitializeTests } from "./stepInitializeTests.ts";
 import { stepInitializeTrialMeta } from "./stepInitializeTrialMeta.ts";
+import { stepRunTest } from "./stepRunTest.ts";
 import type { TrialData } from "./types.ts";
 
 export const cmdTrial: Command = new Command("trial")
@@ -57,7 +58,7 @@ async function performTrialWork(trial: TrialData, options: TrialWorkLoopOptions)
   }
 
   const experimentId = trial.meta.experiment;
-  const experiment = experiments.find((e) => e.id === experimentId)!;
+  const experiment = experiments.get(experimentId)!;
 
   if (trial.currentTestIdx < experiment.tests.length) {
     const currentTest = experiment.tests[trial.currentTestIdx]!;
