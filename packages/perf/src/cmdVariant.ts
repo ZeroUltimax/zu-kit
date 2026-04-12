@@ -10,7 +10,7 @@ export const cmdVariant: Command = new Command(".variant")
   .description(
     "Internal command used by the experiment to execute a specific test:variant case. Not meant to be called directly.",
   )
-  .argument("<experiment>", "Experiment ID or Name")
+  .argument("experiment", "Experiment ID or Name")
   .argument("test", "Test ID or Name")
   .argument("variant", "Variant ID or Name")
   .argument("samples", "Sample count", Number)
@@ -25,6 +25,11 @@ async function actionVariant(
   iters: number,
   // { experimentSrc }: VariantOptions,
 ): Promise<void> {
+  if (global.gc == null) {
+    console.error("Garbage collection is not exposed. Run the command with `--expose-gc` to enable it.");
+    process.exit(1);
+  }
+
   const experiment = byIdOrName(experiments, experimentIdOrName);
 
   if (!experiment) throw new Error(`Experiment not found: ${experimentIdOrName}`);
@@ -50,22 +55,27 @@ Variant "${variant.name}" (${variant.id})
   const instances = instantiateTests(test.factory, variant.value, iters);
   assert.equal(instances.length, iters);
 
+  // Two warmup runs is sufficient to get past any initialization overhead,
+  // and to trigger any JIT optimizations in the case of JavaScript engines.
   console.info(`Warmup Phase...`);
+  for (const instance of instances) acc = instance(acc);
   for (const instance of instances) acc = instance(acc);
 
   console.info(`Benchmark Phase...`);
   const samples: number[] = [];
 
-  const divisions = Math.min(sampleCount, 50);
+  const divisions = Math.min(sampleCount, 10);
   let nextDiv = 0;
 
   for (let sampleIndex = 0; sampleIndex < sampleCount; sampleIndex++) {
+    global.gc();
     const start = performance.now();
     for (const instance of instances) acc = instance(acc);
     const end = performance.now();
     const durationMs = end - start;
     const durationNs = durationMs * 1e6;
-    const durationPerIterNs = Math.round(durationNs / iters);
+
+    const durationPerIterNs = Math.round((durationNs / iters) * 1e2) / 1e2;
 
     samples.push(durationPerIterNs);
 
@@ -75,9 +85,8 @@ Variant "${variant.name}" (${variant.id})
       nextDiv++;
     }
   }
+  samples.sort((a, b) => a - b);
   process.send?.(samples);
 
   console.info(`Done!`);
-
-  console.log(samples);
 }
